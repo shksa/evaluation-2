@@ -15,14 +15,14 @@ server.route({
     request.get(url, (error, response, body) => {
       const json = JSON.parse(body);
       // console.log(json);
-      reply(JSON.stringify(json));
+      reply(json);
     });
   },
 });
-
-server.start((err) => {
-  console.log(err);
-  console.log('Server running at:', server.info.uri);
-});
+//
+// server.start((err) => {
+//   console.log(err);
+//   console.log('Server running at:', server.info.uri);
+// });
 
 module.exports = server;

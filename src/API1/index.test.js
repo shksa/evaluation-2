@@ -1,22 +1,24 @@
-const Server = require('./index.js');
+// const Server = require('./index.js');
+const expected = require('./sampleResponse');
+const request = require('request');
 
 describe('test is server is fetching data', () => {
-  const options = {
-    method: 'GET',
-    url: '/getBooks',
-  };
-  test('testing if response status code is 200', (done) => {
-    Server.inject(options, (response) => {
-      console.log('got response');
-      expect(response.statusCode).toBe(200);
+  test('testing if server produces correct response', (done) => {
+    request.get('http://localhost:8004/getBooks', (error, response, body) => {
+      expect(response.statusCode).toEqual(200);
       done();
     });
   });
-
-  test('testing if server gets a response', (done) => {
-    Server.inject(options, (response) => {
-      console.log('got data as response');
-      expect(response.result.length).not.toBe(0);
+  test('testing if server produces non-empty response', (done) => {
+    request.get('http://localhost:8004/getBooks', (error, response, body) => {
+      expect(body.length).not.toBe(0);
+      done();
+    });
+  });
+  test('testing if server produces correct response', (done) => {
+    request.get('http://localhost:8004/getBooks', (error, response, body) => {
+      const json = JSON.parse(body);
+      expect(json).toEqual(expected);
       done();
     });
   });
